@@ -10,5 +10,9 @@
 
 <%@post.each do |post|%>
   <p><%=post.text%></p>
+    <%if post.user_id == current_user.id %>
+      <%=link_to '編集する', edit_post_path(post.id) %>
+      <%=link_to '削除する', post_path(post.id), method: :delete %>
+    <%end%>
   <p><%=post.user.email%></p>
 <%end%>
