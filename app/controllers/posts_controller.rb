@@ -1,4 +1,6 @@
 class PostsController < ApplicationController
+  before_action :set_post, only: [:edit, :update, :destroy, :show]
+  before_action :move_to_indes, only: [:edit] 
   def index
     @posts = Post.all
   end
@@ -17,11 +19,9 @@ class PostsController < ApplicationController
   end
 
   def edit
-    @post = Post.find(params[:id])
   end
 
   def update
-    @post = Post.find(params[:id])
     if @post.update(post_params)
       @post.update(post_params)
     else
@@ -31,13 +31,11 @@ class PostsController < ApplicationController
   end
 
   def destroy
-    @post = Post.find(params[:id])
     @post.destroy
     redirect_to root_path
   end
 
   def show
-    @post = Post.find(params[:id])
   end
 
   private
@@ -46,5 +44,15 @@ class PostsController < ApplicationController
     params.require(:post).permit(:text).merge(user_id: current_user.id)
   end 
 
+  def set_post
+    @post = Post.find(params[:id])
+  end
+
+  def move_to_indes
+    redirect_to root_path unless user_signed_in? 
+    if user_signed_in?
+      redirect_to root_path unless @post.user.id == current_user.id
+    end
+  end 
 
 end
