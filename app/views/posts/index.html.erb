@@ -2,7 +2,18 @@
 <% if user_signed_in? %>
   <%=link_to 'ログアウト', destroy_user_session_path, method: :delete%>
   <%= "ようこそ#{current_user.email}さん" %>
+  <%=link_to '新規投稿', new_post_path %>
 <% else %>
 <%=link_to  'ログイン', new_user_session_path %>
 <%=link_to  '新規登録', new_user_registration_path %>
 <% end %>
+
+<%@posts.each do |post|%>
+  <p><%=post.text%></p>
+    <%if user_signed_in? && post.user_id == current_user.id %>
+      <%=link_to '編集する', edit_post_path(post.id) %>
+      <%=link_to '削除する', post_path(post.id), method: :delete %>
+    <%end%>
+    <%=link_to '詳細を表示する', post_path(post.id) %>
+  <p><%=post.user.email%></p>
+<%end%>

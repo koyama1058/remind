@@ -1,0 +1,6 @@
+新規投稿画面
+
+<%= form_with(model: @post, local: true) do |form| %>
+  <%= form.text_field :text, placeholder: '投稿内容'%>
+  <%= form.submit '投稿する'%>
+<% end %>
