@@ -14,5 +14,6 @@
       <%=link_to '編集する', edit_post_path(post.id) %>
       <%=link_to '削除する', post_path(post.id), method: :delete %>
     <%end%>
+    <%=link_to '詳細を表示する', post_path(post.id) %>
   <p><%=post.user.email%></p>
 <%end%>
